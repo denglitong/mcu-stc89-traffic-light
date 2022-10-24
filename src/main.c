@@ -6,7 +6,7 @@ const unsigned char LED_RED = 0xff & ~(0x01 << 6 | 0x01 << 7);
 const unsigned char LED_YELLOW = 0xff & ~(0x01 << 3 | 0x01 << 4);
 const unsigned char LED_GREEN = 0xff & ~(0x01 << 0 | 0x01 << 1);
 
-unsigned char LIGHT_INDEX = 0;
+unsigned char __idata LIGHT_INDEX = 0;
 // LED_RED, LED_YELLOW, LED_GREEN
 unsigned char SECONDS[] = {15, 10, 5};
 short DIGIT = 0;
