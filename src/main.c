@@ -9,7 +9,7 @@ const unsigned char LED_GREEN = 0xff & ~(0x01 << 0 | 0x01 << 1);
 unsigned char LIGHT_INDEX = 0;
 // LED_RED, LED_YELLOW, LED_GREEN
 unsigned char SECONDS[] = {15, 10, 5};
-unsigned short DIGIT = 0;
+short DIGIT = 0;
 
 unsigned char T0_INTERRUPT_FLAG = 0;
 // 受精度所限，T0 的 1s 间隔需要拆分为多次来实现
@@ -99,7 +99,7 @@ void turn_on_yellow() { LED_LINE = LED_YELLOW; }
 void turn_on_green() { LED_LINE = LED_GREEN; }
 
 void ConfigT0() {
-  unsigned long total_time_beats = (11059200 / 12 / 1000) * T1_INTERVAL_MS;
+  unsigned long total_time_beats = (11059200 / 12 / 1000) * T0_INTERVAL_MS;
   unsigned long init_time_beats = 65536 - total_time_beats;
 
   EA = 1;        // enable global interrupt
@@ -140,7 +140,7 @@ void interrupt_timer0() __interrupt(1) {
     T0_CNT = 0;
     T0_INTERRUPT_FLAG = 1;
     DIGIT--;
-    if (DIGIT <= 0) {
+    if (DIGIT < 0) {
       LIGHT_INDEX++;
       LIGHT_INDEX %= 3;
       DIGIT = SECONDS[LIGHT_INDEX];
